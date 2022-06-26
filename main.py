@@ -1,8 +1,36 @@
 from tkinter import *
-
+import random
+import string
 FONT_NAME = "Courier"
+CAPS_LETTER=list(string.ascii_uppercase)
+LOWER_LETTER=list(string.ascii_lowercase)
+SYMBOLS=list(string.punctuation)
+NUMBERS=list(string.digits)
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+def generate_passowrd():
+    # print(caps_letters)
+    # print(lower_letter)
+    # print(symbols)
+    # print(numbers)
+    delete_val()
+    password=[]
+    for _ in range(4):
+        password.append(random.choice(CAPS_LETTER))
+        password.append(random.choice(LOWER_LETTER))
+        password.append(random.choice(SYMBOLS))
+        password.append(random.choice(NUMBERS))
+    # print(password)
+    random.shuffle(password)
+    final_password=""
+    for val in password:
+        final_password+=val
+    # print(final_password)
+    password_txtbox.insert(1,final_password)
 
+def delete_val():
+    val=password_txtbox.get()
+    for _ in range(len(val)):
+        password_txtbox.delete(0)
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -42,11 +70,11 @@ password_txtbox=Entry()
 password_txtbox.config(width=50)
 password_txtbox.grid(row=3,column=1)
 # generate password button
-generate_password_button=Button(text="Generate Password")
+generate_password_button=Button(text="Generate Password", command=generate_passowrd)
 generate_password_button.grid(row=3,column=2)
 # add button
 add_button=Button(text="Add")
-add_button.config(width=20, bg="blue", fg="white")
+add_button.config(width=20, bg="blue", fg="white",)
 add_button.grid(row=4,column=1)
 
 
