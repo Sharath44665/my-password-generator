@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-import random
+import random, pyperclip
 import string
 
 FONT_NAME = "Courier"
@@ -18,6 +18,7 @@ def generate_password():
     # print(numbers)
     delete_password_textbox()
     password = []
+    # password=[val for val in range(4) if ]
     for _ in range(4):
         password.append(random.choice(CAPS_LETTER))
         password.append(random.choice(LOWER_LETTER))
@@ -26,11 +27,13 @@ def generate_password():
     # print(password)
     random.shuffle(password)
     final_password = ""
-    for val in password:
-        final_password += val
+    # for val in password:
+    #     final_password += val
+    final_password = "".join(password)
     # print(final_password)
-    password_txtbox.insert(1, final_password)
 
+    password_txtbox.insert(0, final_password)
+    pyperclip.copy(final_password)
 
 def delete_password_textbox():
     val = password_txtbox.get()
@@ -57,13 +60,12 @@ def save_password():
         error_msg = ""
         user_option = messagebox.askokcancel(title=f"{website_name} ",
                                              message=f"Username: {username}\n Password: {password}\n Do you want to Save? ")
-        if user_option: #true
+        if user_option:  # true
             with open("password.txt", "a") as my_file:
                 my_file.write(f"{website_name} | {username} | {password} \n")
             delete_website_textbox()
             delete_password_textbox()
             website_textbox.focus()
-
 
     error_label.config(text=error_msg, font=(FONT_NAME, 15, "bold"))
 
