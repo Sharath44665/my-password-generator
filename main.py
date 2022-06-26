@@ -72,6 +72,7 @@ website_label.grid(row=1, column=0)
 website_textbox = Entry()
 website_textbox.grid(row=1, column=1, columnspan=2)
 website_textbox.config(width=50)
+website_textbox.focus()
 
 # email
 email_label = Label(text="Email/ Username: ")
