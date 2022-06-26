@@ -32,6 +32,20 @@ def delete_val():
     for _ in range(len(val)):
         password_txtbox.delete(0)
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+def save_password():
+    website_name=website_textbox.get()
+    username=username_textbox.get()
+    password=password_txtbox.get()
+
+    error_msg=""
+    if website_name =="" or username =="" or password =="":
+        error_msg="hello world"
+    else:
+        error_msg="Success..."
+        with open("password.txt", "a") as my_file:
+            my_file.write(f"{website_name} | {username} | {password} \n")
+
+    error_label.config(text=error_msg, font=(FONT_NAME, 15, "bold"))
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -45,7 +59,7 @@ canvas.create_image(50,100,image=logo_img )
 # canvas.pack()
 canvas.grid(row=0,column=1)
 # website
-website_label= Label(text="Website: ", font=(FONT_NAME,20,"bold"))
+website_label= Label(text="Website: ")
 website_label.grid(row=1,column=0)
 # text box for website
 website_textbox=Entry()
@@ -72,10 +86,13 @@ password_txtbox.grid(row=3,column=1)
 # generate password button
 generate_password_button=Button(text="Generate Password", command=generate_passowrd)
 generate_password_button.grid(row=3,column=2)
+# show errors
+error_label=Label()
+error_label.grid(row=4, column=1)
 # add button
 add_button=Button(text="Add")
-add_button.config(width=20, bg="blue", fg="white",)
-add_button.grid(row=4,column=1)
+add_button.config(width=20, bg="blue", fg="white", command=save_password)
+add_button.grid(row=5,column=1)
 
 
 
