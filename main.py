@@ -15,7 +15,7 @@ def generate_password():
     # print(lower_letter)
     # print(symbols)
     # print(numbers)
-    delete_val()
+    delete_password_textbox()
     password = []
     for _ in range(4):
         password.append(random.choice(CAPS_LETTER))
@@ -31,10 +31,16 @@ def generate_password():
     password_txtbox.insert(1, final_password)
 
 
-def delete_val():
+def delete_password_textbox():
     val = password_txtbox.get()
     for _ in range(len(val)):
         password_txtbox.delete(0)
+
+
+def delete_website_textbox():
+    val = website_textbox.get()
+    for _ in range(len(val)):
+        website_textbox.delete(0)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
@@ -50,6 +56,9 @@ def save_password():
         error_msg = "Success..."
         with open("password.txt", "a") as my_file:
             my_file.write(f"{website_name} | {username} | {password} \n")
+        delete_website_textbox()
+        delete_password_textbox()
+        website_textbox.focus()
 
     error_label.config(text=error_msg, font=(FONT_NAME, 15, "bold"))
 
@@ -64,7 +73,7 @@ logo_img = PhotoImage(file="logo.png")
 canvas = Canvas(height=200, width=200, highlightthickness=0)
 canvas.create_image(50, 100, image=logo_img)
 # canvas.pack()
-canvas.grid(row=0, column=1,columnspan=2)
+canvas.grid(row=0, column=1, columnspan=2)
 # website
 website_label = Label(text="Website: ")
 website_label.grid(row=1, column=0)
@@ -79,21 +88,21 @@ email_label = Label(text="Email/ Username: ")
 email_label.grid(row=2, column=0)
 # username
 username_textbox = Entry()
-username_textbox.insert(1, "sharath@example.com")
+username_textbox.insert(0, "sharath@example.com")  # start from 0th index
 # username_textbox.config(show="sharath@example.com")
 username_textbox.config(width=50)
-username_textbox.grid(row=2, column=1,columnspan=2)
+username_textbox.grid(row=2, column=1, columnspan=2)
 
 # password
 password_label = Label(text="Password: ")
 password_label.grid(row=3, column=0)
 
 password_txtbox = Entry()
-password_txtbox.config(width=31,)
+password_txtbox.config(width=31, )
 password_txtbox.grid(row=3, column=1)
 # generate password button
 generate_password_button = Button(text="Generate Password", command=generate_password)
-generate_password_button.grid(row=3, column=2,)
+generate_password_button.grid(row=3, column=2, )
 # show errors
 error_label = Label()
 error_label.grid(row=4, column=1)
