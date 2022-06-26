@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import random
 import string
 
@@ -51,14 +52,18 @@ def save_password():
 
     error_msg = ""
     if website_name == "" or username == "" or password == "":
-        error_msg = "hello world"
+        error_msg = "Please dont leave Empty"
     else:
-        error_msg = "Success..."
-        with open("password.txt", "a") as my_file:
-            my_file.write(f"{website_name} | {username} | {password} \n")
-        delete_website_textbox()
-        delete_password_textbox()
-        website_textbox.focus()
+        error_msg = ""
+        user_option = messagebox.askokcancel(title=f"{website_name} ",
+                                             message=f"Username: {username}\n Password: {password}\n Do you want to Save? ")
+        if user_option: #true
+            with open("password.txt", "a") as my_file:
+                my_file.write(f"{website_name} | {username} | {password} \n")
+            delete_website_textbox()
+            delete_password_textbox()
+            website_textbox.focus()
+
 
     error_label.config(text=error_msg, font=(FONT_NAME, 15, "bold"))
 
