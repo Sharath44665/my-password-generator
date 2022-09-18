@@ -12,39 +12,35 @@ NUMBERS = list(string.digits)
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
-    # print(caps_letters)
-    # print(lower_letter)
-    # print(symbols)
-    # print(numbers)
-    delete_password_textbox()
-    password = []
-    # password=[val for val in range(4) if ]
-    for _ in range(4):
-        password.append(random.choice(CAPS_LETTER))
-        password.append(random.choice(LOWER_LETTER))
-        password.append(random.choice(SYMBOLS))
-        password.append(random.choice(NUMBERS))
-    # print(password)
-    random.shuffle(password)
-    final_password = ""
-    # for val in password:
-    #     final_password += val
-    final_password = "".join(password)
-    # print(final_password)
+    password_txtbox.delete(0, 50)
+    numberList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    smallLetters = list(string.ascii_uppercase)
+    capsLetters = list(string.ascii_uppercase)
+    specialChars = ['_', '$', '.']
+    passWordList = []
+    passWordText = ""
 
-    password_txtbox.insert(0, final_password)
-    pyperclip.copy(final_password)
+    for i in range(random.randint(1, 9)):
+        passWordList.append(random.choice(numberList))
+    for i in range(random.randint(5, 9)):
+        passWordList.append(random.choice(smallLetters))
+    for i in range(random.randint(5, 9)):
+        passWordList.append(random.choice(capsLetters))
+    for i in range(random.randint(1, 5)):
+        passWordList.append(random.choice(specialChars))
+    random.shuffle(passWordList)
 
-def delete_password_textbox():
-    val = password_txtbox.get()
-    for _ in range(len(val)):
-        password_txtbox.delete(0)
+    for letter in passWordList:
+        passWordText = passWordText + str(letter)
+    # return passWordText
+    password_txtbox.insert(0, passWordText)
 
 
 def delete_website_textbox():
     val = website_textbox.get()
     for _ in range(len(val)):
         website_textbox.delete(0)
+
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
