@@ -40,10 +40,13 @@ def delete_website_textbox():
     val = website_textbox.get()
     for _ in range(len(val)):
         website_textbox.delete(0)
+
+
 def deletePassTextBox():
     val = password_txtbox.get()
     for _ in range(len(val)):
         password_txtbox.delete(0)
+
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
