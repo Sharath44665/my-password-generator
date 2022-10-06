@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-import random, pyperclip
+import random, pyperclip, json
 import string
 
 FONT_NAME = "Courier"
@@ -14,7 +14,7 @@ NUMBERS = list(string.digits)
 def generate_password():
     password_txtbox.delete(0, 50)
     numberList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    smallLetters = list(string.ascii_uppercase)
+    smallLetters = list(string.ascii_lowercase)
     capsLetters = list(string.ascii_uppercase)
     specialChars = ['_', '$', '.']
     passWordList = []
@@ -40,27 +40,55 @@ def delete_website_textbox():
     val = website_textbox.get()
     for _ in range(len(val)):
         website_textbox.delete(0)
-
-
+def deletePassTextBox():
+    val = password_txtbox.get()
+    for _ in range(len(val)):
+        password_txtbox.delete(0)
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
     website_name = website_textbox.get()
     username = username_textbox.get()
     password = password_txtbox.get()
-
+    newData = {
+        website_name: {
+            "username": username,
+            "password": password
+        }
+    }
     error_msg = ""
     if website_name == "" or username == "" or password == "":
         error_msg = "Please dont leave Empty"
     else:
         error_msg = ""
-        user_option = messagebox.askokcancel(title=f"{website_name} ",
-                                             message=f"Username: {username}\n Password: {password}\n Do you want to Save? ")
-        if user_option:  # true
-            with open("password.txt", "a") as my_file:
-                my_file.write(f"{website_name} | {username} | {password} \n")
+        # user_option = messagebox.askokcancel(title=f"{website_name} ",
+        #                                      message=f"Username: {username}\n Password: {password}\n Do you want to Save? ")
+        # if user_option:  # true
+        #     write to json file
+        #     with open("data.json", "w") as my_file:
+        #         # json.load(newData,my_file,indent=4)
+        #         json.dump(newData, my_file,indent=4)
+        #         my_file.write(f"{website_name} | {username} | {password} \n")
+        #     update to json file
+        try:
+            with open("data.json", "r") as myFile:
+                data = json.load(myFile)
+                if data.get(website_name) != None:
+                    myData = data[website_name]
+                    # print(myData["username"])
+                    if myData["username"] == username:
+                        print(f"{username} found, please change the username")
+        except FileNotFoundError:
+
+            with open("data.json", "w") as myFile:
+                json.dump(newData, myFile, indent=4)
+        else:
+            data.update(newData)
+            with open("data.json", "w") as myFile:
+                json.dump(data, myFile, indent=4)
+
             delete_website_textbox()
-            delete_password_textbox()
+            deletePassTextBox()
             website_textbox.focus()
 
     error_label.config(text=error_msg, font=(FONT_NAME, 15, "bold"))
